@@ -9,9 +9,19 @@ namespace Test.AzurePipelines.Tests
         {
             var testSubject = new Class1();
 
-            string result = testSubject.ToLower("YAML_TEST");
+            string result = testSubject.ToLower("TEST");
 
-            Assert.Equal("yaml_test", result);
+            Assert.Equal("test", result);
+        }
+
+        [Fact]
+        public void ToUpper_ConvertsCharactersInMessageToUppercase()
+        {
+            var testSubject = new Class1();
+
+            string result = testSubject.ToUpper("test");
+
+            Assert.Equal("TEST", result);
         }
     }
 }

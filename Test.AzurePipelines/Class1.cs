@@ -6,5 +6,10 @@
         {
             return message.ToLower();
         }
+
+        public string ToUpper(string message)
+        {
+            return message.ToUpper();
+        }
     }
 }
