@@ -1,0 +1,12 @@
+steps:
+- task: DotNetCoreCLI@2
+  inputs:
+    command: build
+    configuration: $(buildConfiguration)
+- task: DotNetCoreCLI@2
+  inputs:
+    command: test
+    projects: '**/Test.AzurePipelines.Tests.csproj'
+    arguments: '--collect "Code coverage"'
+    nobuild: true
+    configuration: $(buildConfiguration)

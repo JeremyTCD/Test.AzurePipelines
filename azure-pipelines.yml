@@ -1,35 +1,29 @@
 trigger:
 - master
-
-pool:
-  vmImage: 'Ubuntu 16.04'
   
 variables:
   buildConfiguration: 'Release'
 
-steps:
-- task: DotNetCoreCLI@2
-  inputs:
-    command: build
-    configuration: $(buildConfiguration)
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: test
-    projects: '**/Test.AzurePipelines.Tests.csproj'
-    arguments: '--collect "Code coverage"'
-    nobuild: true
-    configuration: $(buildConfiguration)
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: pack
-    packagesToPack: '**/Test.AzurePipelines.csproj'
-    configuration: $(buildConfiguration)
-
-- task: NuGetCommand@2
-  inputs:
-    command: push
-    nuGetFeedType: internal
-    publishVstsFeed: Test
-    includeSymbols: true
+jobs:
+- job: linux-build-and-test
+  pool:
+    vmImage: 'Ubuntu 16.04'
+  steps:
+  - template: azure-build-and-test.yml
+- job: windows-build-and-test
+  pool:
+    vmImage: 'vs2017-win2016'
+  steps:
+  - template: azure-build-and-test.yml
+- job: macos-build-and-test
+  pool:
+    vmImage: 'macOS-10.13'
+  steps:
+  - template: azure-build-and-test.yml
+- job: Windows
+  dependsOn:
+  - linux-build-and-test
+  - windows-build-and-test
+  - macos-build-and-test
+  steps:
+  - script: echo deploy
