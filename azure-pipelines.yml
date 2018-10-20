@@ -29,11 +29,13 @@ jobs:
 - job: test_windows
   pool:
     vmImage: 'vs2017-win2016'
+  dependsOn: build
   steps:
   - template: azure-test.yml
 - job: test_macos
   pool:
     vmImage: 'macOS-10.13'
+  dependsOn: build
   steps:
   - template: azure-test.yml
 - job: Windows
