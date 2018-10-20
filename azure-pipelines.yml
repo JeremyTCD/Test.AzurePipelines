@@ -8,17 +8,21 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: build
+    configuration: $(buildConfiguration)
 
 - task: DotNetCoreCLI@2
   inputs:
     command: test
     projects: '**/Test.AzurePipelines.Tests.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage" --no-build'
+    arguments: '--collect "Code coverage"'
+    nobuild: true
+    configuration: $(buildConfiguration)
 
 - task: NuGetCommand@2
   inputs:
     command: pack
     packagesToPack: '**/Test.AzurePipelines.csproj'
+    configuration: $(buildConfiguration)
 
 - task: NuGetCommand@2
   inputs:
