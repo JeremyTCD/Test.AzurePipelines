@@ -1,8 +1,12 @@
 steps:
-- task: DotNetCoreCLI@2
+# Skip checking out the default repository resource
+- checkout: none
+# Download entire working directory from artifacts
+- task: DownloadBuildArtifacts@0
+  displayName: 'Download Build Artifacts'
   inputs:
-    command: build
-    configuration: $(buildConfiguration)
+    artifactName: builtProject
+    downloadPath: $(System.DefaultWorkingDirectory)
 - task: DotNetCoreCLI@2
   inputs:
     command: test

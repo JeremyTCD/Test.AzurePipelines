@@ -5,25 +5,50 @@ variables:
   buildConfiguration: 'Release'
 
 jobs:
-- job: linux_build_and_test
-  pool:
-    vmImage: 'Ubuntu 16.04'
-  steps:
-  - template: azure-build-and-test.yml
-- job: windows_build_and_test
+# Build once
+- job: build
   pool:
     vmImage: 'vs2017-win2016'
   steps:
-  - template: azure-build-and-test.yml
-- job: macos_build_and_test
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: build
+      configuration: $(buildConfiguration)
+  # Publish entire working directory to artifacts - https://docs.microsoft.com/en-us/azure/devops/pipelines/process/phases?view=vsts&tabs=yaml#artifact-download
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: '$(System.DefaultWorkingDirectory)'
+      artifactName: builtProject
+# Test on linux, macOS and windows
+- job: test_linux
+  pool:
+    vmImage: 'Ubuntu 16.04'
+  dependsOn: build
+  steps:
+  - template: azure-test.yml
+- job: test_windows
+  pool:
+    vmImage: 'vs2017-win2016'
+  steps:
+  - template: azure-test.yml
+- job: test_macos
   pool:
     vmImage: 'macOS-10.13'
   steps:
-  - template: azure-build-and-test.yml
+  - template: azure-test.yml
 - job: Windows
   dependsOn:
-  - linux_build_and_test
-  - windows_build_and_test
-  - macos_build_and_test
+  - test_linux
+  - test_windows
+  - test_macos
   steps:
+  # Download entire working directory from artifacts
+  # If changelog has changed
+    # Get changelog latest version
+    # Get latest tag
+    # If versions are different, push to nuget and tag
+    # Pack working dir (dont rebuild)
+    # Publish to nuget.org
+  # If changelog has not changed
+    # Publish 1.0.0-<branch name>.<date etc (increasing num)> to myget
   - script: echo deploy
