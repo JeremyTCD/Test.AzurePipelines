@@ -5,14 +5,23 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: |
-    dotnet build --configuration $(buildConfiguration)
-    dotnet publish --configuration $(buildConfiguration) --output $BUILD_ARTIFACTSTAGINGDIRECTORY
+- task: DotNetCoreCLI@2
+  inputs:
+    command: build
 
 - task: DotNetCoreCLI@2
   inputs:
     command: test
     projects: '**/Test.AzurePipelines.Tests.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+    arguments: '--configuration $(buildConfiguration) --collect "Code coverage" --no-build'
 
-- task: PublishBuildArtifacts@1
+- task: NuGetCommand@2
+  inputs:
+    command: pack
+    packagesToPack: '**/Test.AzurePipelines.csproj'
+
+- task: NuGetCommand@2
+  inputs:
+    command: push
+    nuGetFeedType: internal
+    publishVstsFeed: Test
