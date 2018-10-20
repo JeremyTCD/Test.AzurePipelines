@@ -9,9 +9,9 @@ namespace Test.AzurePipelines.Tests
         {
             var testSubject = new Class1();
 
-            string result = testSubject.ToLower("TEST");
+            string result = testSubject.ToLower("YAML_TEST");
 
-            Assert.Equal("test", result);
+            Assert.Equal("yaml_test", result);
         }
     }
 }
