@@ -5,25 +5,25 @@ variables:
   buildConfiguration: 'Release'
 
 jobs:
-- job: linux-build-and-test
+- job: linux_build_and_test
   pool:
     vmImage: 'Ubuntu 16.04'
   steps:
   - template: azure-build-and-test.yml
-- job: windows-build-and-test
+- job: windows_build_and_test
   pool:
     vmImage: 'vs2017-win2016'
   steps:
   - template: azure-build-and-test.yml
-- job: macos-build-and-test
+- job: macos_build_and_test
   pool:
     vmImage: 'macOS-10.13'
   steps:
   - template: azure-build-and-test.yml
 - job: Windows
   dependsOn:
-  - linux-build-and-test
-  - windows-build-and-test
-  - macos-build-and-test
+  - linux_build_and_test
+  - windows_build_and_test
+  - macos_build_and_test
   steps:
   - script: echo deploy
