@@ -44,13 +44,24 @@ jobs:
   - test_windows
   - test_macos
   steps:
+  # Skip checking out the default repository resource
+  - checkout: none
   # Download entire working directory from artifacts
-  # If changelog has changed
+  - task: DownloadBuildArtifacts@0
+    displayName: 'Download Build Artifacts'
+    inputs:
+      artifactName: builtProject
+      downloadPath: $(System.DefaultWorkingDirectory)
+  # TODO 
+  # If pull request is for a branch other than master, does pipeline run?
+  # If commit is merge commit, are there multiple parents?
+  - script: |
+      echo $env:BUILD_SOURCEBRANCH
+      git show --no-patch --format="short" $env:BUILD_SOURCEVERSION
+# If changelog has changed
     # Get changelog latest version
     # Get latest tag
-    # If versions are different, push to nuget and tag
+  - script: echo deploy
+  # If new version, push to nuget and tag (use conditions to determine whether or not to run this step https://docs.microsoft.com/en-us/azure/devops/pipelines/process/conditions?tabs=yaml&view=vsts)
     # Pack working dir (dont rebuild)
     # Publish to nuget.org
-  # If changelog has not changed
-    # Publish 1.0.0-<branch name>.<date etc (increasing num)> to myget
-  - script: echo deploy
