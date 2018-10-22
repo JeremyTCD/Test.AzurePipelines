@@ -11,6 +11,4 @@ steps:
   inputs:
     command: test
     projects: '**/Test.AzurePipelines.Tests.csproj'
-    arguments: '--collect "Code coverage"'
-    nobuild: true
-    configuration: $(buildConfiguration)
+    arguments: '--no-build --configuration $(buildConfiguration) --collect "Code coverage"'
