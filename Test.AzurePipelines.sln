@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2046
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.AzurePipelines", "src\Test.AzurePipelines\Test.AzurePipelines.csproj", "{14762C21-63DC-458C-ADF4-F7998FB777A6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8FCE1611-5D34-49AB-9251-B1D7B440E470}"
+	ProjectSection(SolutionItems) = preProject
+		azure-pipelines.yml = azure-pipelines.yml
+		azure-test.yml = azure-test.yml
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.AzurePipelines.Tests", "test\Test.AzurePipelines.Tests\Test.AzurePipelines.Tests.csproj", "{BD81A584-EA66-40DA-A93D-104509C768BE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{14762C21-63DC-458C-ADF4-F7998FB777A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14762C21-63DC-458C-ADF4-F7998FB777A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14762C21-63DC-458C-ADF4-F7998FB777A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14762C21-63DC-458C-ADF4-F7998FB777A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD81A584-EA66-40DA-A93D-104509C768BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD81A584-EA66-40DA-A93D-104509C768BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD81A584-EA66-40DA-A93D-104509C768BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD81A584-EA66-40DA-A93D-104509C768BE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {45F98B94-E8A5-4FDD-AFD2-053B3A7CAAEC}
+	EndGlobalSection
+EndGlobal

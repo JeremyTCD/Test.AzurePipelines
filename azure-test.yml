@@ -1,0 +1,30 @@
+parameters:
+  name: ''
+  vmImage: ''
+  globalPackages: ''
+
+jobs:
+- job: ${{ parameters.name }}
+  pool:
+    vmImage: ${{ parameters.vmImage }}
+  dependsOn: build
+  steps:
+  # Skip checking out the default repository resource
+  - checkout: none
+  # Download entire working directory from pipeline artifacts
+  - task: DownloadPipelineArtifact@0
+    displayName: 'Download Working Directory'
+    inputs:
+      artifactName: builtSolution
+      targetPath: $(System.DefaultWorkingDirectory)
+  - task: DotNetCoreCLI@2
+    displayName: 'Restore'
+    inputs:
+      command: restore
+      projects: 'test/**/*.csproj'
+  - task: DotNetCoreCLI@2
+    displayName: 'Test'
+    inputs:
+      command: test
+      projects: 'test/**/*.csproj'
+      arguments: '--no-build --configuration Release'
