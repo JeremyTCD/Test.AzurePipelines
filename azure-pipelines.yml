@@ -6,7 +6,6 @@ resources:
   - repository: templates
     type: github
     name: DevOps.AzurePipelines
-    endpoint: https://github.com/JeremyTCD/DevOps.AzurePipelines.git
 
 jobs:
 - template: nuget-package.yml@templates
