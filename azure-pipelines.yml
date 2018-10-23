@@ -1,67 +1,10 @@
 trigger:
 - master
-  
-variables:
-  buildConfiguration: 'Release'
 
-jobs:
-# Build once
-- job: build
-  pool:
-    vmImage: 'vs2017-win2016'
-  steps:
-  - task: DotNetCoreCLI@2
-    inputs:
-      command: build
-      configuration: $(buildConfiguration)
-  # Publish entire working directory to artifacts - https://docs.microsoft.com/en-us/azure/devops/pipelines/process/phases?view=vsts&tabs=yaml#artifact-download
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathtoPublish: '$(System.DefaultWorkingDirectory)'
-      artifactName: builtProject
-# Test on linux, macOS and windows
-- job: test_linux
-  pool:
-    vmImage: 'Ubuntu 16.04'
-  dependsOn: build
-  steps:
-  - template: azure-test.yml
-- job: test_windows
-  pool:
-    vmImage: 'vs2017-win2016'
-  dependsOn: build
-  steps:
-  - template: azure-test.yml
-- job: test_macos
-  pool:
-    vmImage: 'macOS-10.13'
-  dependsOn: build
-  steps:
-  - template: azure-test.yml
-- job: Windows
-  dependsOn:
-  - test_linux
-  - test_windows
-  - test_macos
-  steps:
-  # Skip checking out the default repository resource
-  - checkout: none
-  # Download entire working directory from artifacts
-  - task: DownloadBuildArtifacts@0
-    displayName: 'Download Build Artifacts'
-    inputs:
-      artifactName: builtProject
-      downloadPath: $(System.DefaultWorkingDirectory)
-  # TODO 
-  # If pull request is for a branch other than master, does pipeline run?
-  # If commit is merge commit, are there multiple parents?
-  - script: |
-      echo $env:BUILD_SOURCEBRANCH
-      git show --no-patch --format="short" $env:BUILD_SOURCEVERSION
-# If changelog has changed
-    # Get changelog latest version
-    # Get latest tag
-  - script: echo deploy
-  # If new version, push to nuget and tag (use conditions to determine whether or not to run this step https://docs.microsoft.com/en-us/azure/devops/pipelines/process/conditions?tabs=yaml&view=vsts)
-    # Pack working dir (dont rebuild)
-    # Publish to nuget.org
+resources:
+  - repository: templates
+    type: github
+    name: JeremyTCD/DevOps.AzurePipelines
+
+jobs: 
+- template: nuget-package.yml@templates
