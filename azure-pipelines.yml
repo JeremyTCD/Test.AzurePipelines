@@ -2,108 +2,15 @@ trigger:
 - master
 
 variables:
-  NUGET_PACKAGES: $(System.DefaultWorkingDirectory)/packages
+  NUGET_PACKAGES: $(System.DefaultWorkingDirectory)/packages # TODO necessary even with CopyLocalLockFileAssemblies?
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
 
-# resources:
-#   repositories:
-#   - repository: templates
-#     type: github
-#     name: JeremyTCD/DevOps.AzurePipelines
-#     endpoint: https://github.com/JeremyTCD/DevOps.AzurePipelines.git
-
-# jobs:
-# - template: nuget-package.yml@templates
+resources:
+  repositories:
+  - repository: templates
+    type: github
+    name: JeremyTCD/DevOps.AzurePipelines
+    endpoint: JeremyTCD
 
 jobs:
-# Build
-- job: Build
-  pool:
-    vmImage: 'vs2017-win2016'
-  steps:
-# TODO alternatively, try dotnet publish
-  - script: 'dotnet build --configuration Release -p:CopyLocalLockFileAssemblies=true'
-  # Publish entire working directory to artifacts - https://docs.microsoft.com/en-us/azure/devops/pipelines/process/phases?view=vsts&tabs=yaml#artifact-download
-  - task: PublishPipelineArtifact@0
-    displayName: 'Publish Working Directory'
-    inputs:
-      targetPath: '$(System.DefaultWorkingDirectory)'
-      artifactName: builtSolution
-# Test
-- template: azure-test.yml
-  parameters:
-    name: WindowsTests
-    vmImage: 'vs2017-win2016'
-- template: azure-test.yml
-  parameters:
-    name: LinuxTests
-    vmImage: 'ubuntu-16.04'
-- template: azure-test.yml
-  parameters:
-    name: macOSTests
-    vmImage: 'macOS-10.13'
-# Deploy
-- job: Deploy
-  dependsOn:
-  - LinuxTests
-  #- WindowsTests
-  #- macOSTests
-  steps:
-  # Skip checking out the default repository resource
-  - checkout: none
-  # Download entire working directory from artifacts
-  - task: DownloadPipelineArtifact@0
-    displayName: 'Download Working Directory'
-    inputs:
-      artifactName: builtSolution
-      targetPath: $(System.DefaultWorkingDirectory)
-  - powershell: |
-      $commit = $env:BUILD_SOURCEVERSION
-
-        # TODO 
-        # If pull request is for a branch other than master, does pipeline run?
-        # If commit is merge commit, are there multiple parents?
-        # In a pull req, is source branch name the branch being merged into or the branch with changes
-      $env:BUILD_SOURCEBRANCHNAME
-      git show --no-patch --format="short" $commit
-
-      ## TODO don't continue if not a merge commit into master
-
-      $file = 'changelog.md'
-      $versionHeaderPattern = '^\+##[ \t]*\[(\d+\.\d+\.\d+)\]'
-
-      # Check whether changelog has changed
-      $changedFiles = Invoke-Git show --pretty="" --name-only $commit
-      if(-not($changedFiles -contains $file)){
-       "Changelog unchanged, nothing to deploy."
-       exit
-      }
-      else{
-       "Changelog changed."
-      }
-
-      # Check whether changelog has a new version
-      $addedLines = Invoke-Git diff --unified=0 $commit^ $commit -- $file 
-      $newVersionLines = $addedLines -match $versionHeaderPattern
-      if($newVersionLines.Length -gt 1)
-      {
-        throw "More than one new versions detected, correct changelog or deploy releases manually."
-      }
-      if($newVersionLines.length -eq 0){
-        "No new versions, nothing to deploy."
-        exit
-      }
-      $newVersion = $matches[1]
-      "New version `"$newVersion`" detected."
-
-      # Create new tag
-      $tag = "$newVersion"
-      Invoke-Git tag $tag
-      Invoke-Git push origin master $tag -q
-      " Tag `"$tag`" created and pushed to origin."
-
-      # Pack working dir (dont rebuild)
-      dotnet pack --no-restore --no-build --include-symbols --configuration Release
-
-      # Publish to nuget.org
-      dotnet nuget push **/*.nupkg --source Test --api-key VSTS
+- template: nuget-package.yml@templates
