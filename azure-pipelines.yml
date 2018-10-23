@@ -21,26 +21,27 @@ jobs:
   pool:
     vmImage: 'vs2017-win2016'
   steps:
-  - script: dotnet build --configuration Release -p:"CopyLocalLockFileAssemblies=true"
+# TODO alternatively, try dotnet publish
+  - script: 'dotnet build --configuration Release -p:CopyLocalLockFileAssemblies=true'
   # Publish entire working directory to artifacts - https://docs.microsoft.com/en-us/azure/devops/pipelines/process/phases?view=vsts&tabs=yaml#artifact-download
   - task: PublishPipelineArtifact@0
     displayName: 'Publish Working Directory'
     inputs:
       targetPath: '$(System.DefaultWorkingDirectory)'
       artifactName: builtSolution
- # Test
- - template: azure-test.yml
-   parameters:
-     name: WindowsTests
-     vmImage: 'vs2017-win2016'
+# Test
+- template: azure-test.yml
+  parameters:
+    name: WindowsTests
+    vmImage: 'vs2017-win2016'
 - template: azure-test.yml
   parameters:
     name: LinuxTests
     vmImage: 'ubuntu-16.04'
- - template: azure-test.yml
-   parameters:
-     name: macOSTests
-     vmImage: 'macOS-10.13'
+- template: azure-test.yml
+  parameters:
+    name: macOSTests
+    vmImage: 'macOS-10.13'
 # Deploy
 - job: Deploy
   dependsOn:

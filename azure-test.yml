@@ -7,7 +7,7 @@ jobs:
 - job: ${{ parameters.name }}
   pool:
     vmImage: ${{ parameters.vmImage }}
-  dependsOn: build
+  dependsOn: Build
   steps:
   # Skip checking out the default repository resource
   - checkout: none
@@ -22,4 +22,4 @@ jobs:
     inputs:
       command: test
       projects: 'test/**/*.csproj'
-      arguments: '--no-build --configuration Release'
+      arguments: '--no-restore --no-build --configuration Release'
