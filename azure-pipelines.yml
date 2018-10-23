@@ -2,7 +2,7 @@ trigger:
 - master
 
 variables:
-  #NUGET_PACKAGES: $(System.DefaultWorkingDirectory)/packages
+  NUGET_PACKAGES: $(System.DefaultWorkingDirectory)/packages
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
 
 # resources:
@@ -21,7 +21,7 @@ jobs:
   pool:
     vmImage: 'vs2017-win2016'
   steps:
-  - powershell: dotnet build --configuration Release
+  - script: dotnet build --configuration Release
   # Publish entire working directory to artifacts - https://docs.microsoft.com/en-us/azure/devops/pipelines/process/phases?view=vsts&tabs=yaml#artifact-download
   - task: PublishPipelineArtifact@0
     displayName: 'Publish Working Directory'

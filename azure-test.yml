@@ -18,11 +18,6 @@ jobs:
       artifactName: builtSolution
       targetPath: $(System.DefaultWorkingDirectory)
   - task: DotNetCoreCLI@2
-    displayName: 'Restore'
-    inputs:
-      command: restore
-      projects: 'test/**/*.csproj'
-  - task: DotNetCoreCLI@2
     displayName: 'Test'
     inputs:
       command: test
