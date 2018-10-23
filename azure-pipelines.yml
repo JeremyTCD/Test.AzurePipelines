@@ -2,7 +2,7 @@ trigger:
 - master
 
 variables:
-  NUGET_PACKAGES: $(System.DefaultWorkingDirectory)/packages
+  #NUGET_PACKAGES: $(System.DefaultWorkingDirectory)/packages
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
 
 # resources:
