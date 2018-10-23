@@ -22,4 +22,4 @@ jobs:
     inputs:
       command: test
       projects: 'test/**/*.csproj'
-      arguments: '--no-build --configuration Release'
+      arguments: '--configuration Release'
