@@ -11,7 +11,7 @@ namespace Test.AzurePipelines.Tests
 
             string result = testSubject.ToLower("TEST");
 
-            Assert.Equal("test", result);
+            Assert.Equal("tesT", result);
         }
 
         [Fact]
