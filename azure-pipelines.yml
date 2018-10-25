@@ -1,9 +1,8 @@
 trigger:
 - master
 
-#variables:
-#  NUGET_PACKAGES: $(System.DefaultWorkingDirectory)/packages # TODO necessary even with CopyLocalLockFileAssemblies?
-#  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+variables:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
 
 resources:
   repositories:
