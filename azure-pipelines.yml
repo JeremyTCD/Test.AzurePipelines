@@ -14,4 +14,4 @@ resources:
 jobs:
 - template: nuget-package.yml@templates
   parameters:
-  - vstsFeedName: "Test"
+    vstsFeedName: "Test"
