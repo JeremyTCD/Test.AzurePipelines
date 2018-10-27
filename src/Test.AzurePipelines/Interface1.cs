@@ -14,5 +14,10 @@
         /// Converts all of the characters in a string to uppercase.
         /// </summary>
         string ToUpper(string message);
+
+        /// <summary>
+        /// Increments a number by 1.
+        /// </summary>
+        int Increment(int num);
     }
 }

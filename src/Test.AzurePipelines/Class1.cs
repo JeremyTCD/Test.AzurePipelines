@@ -16,5 +16,11 @@
         {
             return message.ToUpper();
         }
+
+        /// <inheritdoc />
+        public int Increment(int num)
+        {
+            return num++;
+        }
     }
 }
