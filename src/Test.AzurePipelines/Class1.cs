@@ -22,5 +22,11 @@
         {
             return num++;
         }
+
+        /// <inheritdoc />
+        public int Decrement(int num)
+        {
+            return num--;
+        }
     }
 }

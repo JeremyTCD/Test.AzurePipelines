@@ -19,5 +19,10 @@
         /// Increments a number by 1.
         /// </summary>
         int Increment(int num);
+
+        /// <summary>
+        /// Decrements a number by 1.
+        /// </summary>
+        int Decrement(int num);
     }
 }
