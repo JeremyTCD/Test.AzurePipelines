@@ -14,5 +14,5 @@ resources:
 jobs:
 - template: nuget-package.yml@templates
   parameters:
-    vstsFeedName: "Test"
-    nugetEndpoint: "https://staging.nuget.org/api/v2/package"
+    nugetRestoreVstsFeed: "Main"
+    nugetPushEndpoint: "https://staging.nuget.org/api/v2/package"
