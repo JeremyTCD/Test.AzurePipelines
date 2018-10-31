@@ -1,3 +1,6 @@
+## [0.4.0](example.com)
+blah
+
 ## [0.3.0](example.com)
 blah
 
