@@ -9,7 +9,8 @@ resources:
     endpoint: JeremyTCD
 
 jobs:
-- template: templates/nuget/main.yml@templates
-  parameters:
-    nugetRestoreEndPoint: "https://pkgs.dev.azure.com/JeremyTCD/_packaging/Main/nuget/v2"
-    nugetPushEndpoint: "https://staging.nuget.org/api/v2/package"
+#- template: templates/nuget/main.yml@templates
+#  parameters:
+#    nugetRestoreEndpoint: "https://pkgs.dev.azure.com/JeremyTCD/_packaging/Main/nuget/v2"
+#    nugetPushEndpoint: "https://pkgs.dev.azure.com/JeremyTCD/_packaging/Main/nuget/v2"
+- template: templates/docs/main.yml@templates
