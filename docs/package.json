@@ -1,0 +1,17 @@
+{
+    "name": "flexiblocks-documentation",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "serve-dev": "set NODE_ENV=development && yarn run serve -p ../../../../",
+        "serve-production": "set NODE_ENV=production && yarn run serve -p ../../../../",
+        "serve": "node node_modules/mimo-website/dist/tools/serve.js",
+        "build-dev": "set NODE_ENV=development && yarn run build -p ../../../../",
+        "build-production": "set NODE_ENV=production && yarn run build -p ../../../../",
+        "build": "node  node_modules/mimo-website/dist/tools/build.js"
+    },
+    "devDependencies": {},
+    "dependencies": {
+        "mimo-website": "C:/Projects/JeremyTCD.DocFx.Themes.Mimo/mimo-website-v0.100.0.tgz"
+    }
+}
