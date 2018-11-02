@@ -10,8 +10,7 @@
         "build-production": "set NODE_ENV=production && yarn run build -p ../../../../",
         "build": "node node_modules/mimo-website/dist/tools/build.js"
     },
-    "devDependencies": {},
     "dependencies": {
-        "mimo-website": "C:/Projects/JeremyTCD.DocFx.Themes.Mimo/mimo-website-v0.100.0.tgz"
+        "mimo-website": "1.0.0-alpha.19"
     }
 }
