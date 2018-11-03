@@ -10,6 +10,8 @@ resources:
 
 jobs:
 - template: templates/nuget/main.yml@templates
+  parameters: 
+    nugetPushEndpoint: "https://int.nugettest.org/api/v2/package"
 - template: templates/docs/main.yml@templates
   parameters:
     nugetRestoreEndpoint: "https://pkgs.dev.azure.com/JeremyTCD/_packaging/Main/nuget/v2"
