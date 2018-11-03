@@ -1,3 +1,6 @@
+## [0.5.0](example.com)
+Added icon
+
 ## [0.4.0](example.com)
 blah
 
