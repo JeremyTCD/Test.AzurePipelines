@@ -6,6 +6,7 @@
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <PackageIconUrl>https://raw.githubusercontent.com/JeremyTCD/Test.AzurePipelines/master/nuget_icon.png</PackageIconUrl>
     </PropertyGroup>
 
     <ItemGroup>
