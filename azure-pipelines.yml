@@ -12,6 +12,7 @@ jobs:
 - template: templates/nuget/main.yml@templates
   parameters: 
     nugetReleasePushEndpoint: "https://int.nugettest.org/api/v2/package"
+    nugetUnreleasedPreleasePushEndpoint: "https://www.myget.org/F/jering/api/v3/index.json"
 #- template: templates/docs/main.yml@templates
 #  parameters:
 #    nugetRestoreEndpoint: "https://pkgs.dev.azure.com/JeremyTCD/_packaging/Main/nuget/v2"
