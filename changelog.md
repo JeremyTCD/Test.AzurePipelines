@@ -1,3 +1,5 @@
+## [Unreleased (0.6.0)](example.com)
+
 ## [0.5.0](example.com)
 Added icon
 
